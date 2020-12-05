@@ -57,6 +57,7 @@
             background-color: #585858;
             border-radius: 10px 10px 10px 10px;
             float: right;
+            overflow-y: scroll;
         }
 
         .MessageBox {
@@ -69,13 +70,40 @@
             margin-left: 1%;
             margin-top: 0.5%;
             color: white;
-            font-size:30px;
+            font-size: 30px;
             padding-left: 20px;
         }
-        .MessageUnit{
+
+        .MessageUnit {
             height: 10%;
-            width: 100%;
+            width: 90.8%;
             background-color: #383838;
+            border-radius: 10px 10px 10px 10px;
+            position: fixed;
+        }
+        .Message{
+            height: 65px;
+            width: 40%;
+            background-color: #383838;
+            border-radius: 10px 10px 10px 10px;
+            border: none;
+            margin-left: 1%;
+            color: white;
+            font-size: 30px;
+            padding-left: 20px;
+        }
+        ::-webkit-scrollbar{
+            height: 10px;
+            width: 10px;
+            background-color: #1a1a1a81;
+        }
+        ::-webkit-scrollbar-track{
+            height: 10px;
+            width: 10px;
+            background-color: #1a1a1a81;
+        }
+        ::-webkit-scrollbar-thumb{
+            background-color: #00000081;
             border-radius: 10px 10px 10px 10px;
         }
     </style>
@@ -88,6 +116,12 @@
                 $("p").toggle();
                 setTimeout(function () { a.css('width', '80px'); }, 2500);
                 setTimeout(function () { $("p").toggle(); }, 2500);
+            });
+        });
+        $(document).ready(function () {
+            $("#SendMessage").click(function () {
+                var x = $("#MessageBox").val();
+                $("#Results").append("<br><input readonly class='Message' value=''><br>");
             });
         });
     </script>
@@ -104,16 +138,18 @@
             <img src="https://th.bing.com/th/id/OIP.PTArRyNau0VomdH647ex3gHaHa?w=183&h=183&c=7&o=5&pid=1.7"
                 style="opacity: 0.5; border-radius: 50%; height: 70px; width: 70px;">
             <p>Chat</p>
-    </center>
+        </center>
     </div>
-        <div class="Results">
-            <center>
-                <div class="MessageUnit">
-                    <input class="MessageBox" placeholder="Type Your Message Here!">
-                    <img src="https://th.bing.com/th?q=Send+Arrow+Icon&w=120&h=120&c=1&rs=1&qlt=90&cb=1&pid=InlineBlock&mkt=en-WW&adlt=moderate&t=1&mw=247" style="border-radius: 50%; width: 60px; height: 60px; border-color:#ffffff; margin-top: 0.5%; cursor: pointer;" border="4px">
-                </div>
-            </center>
-        </div>
+    <div class="Results" id="Results">
+        <center>
+            <div class="MessageUnit">
+                <input class="MessageBox" placeholder="Type Your Message Here!" id="MessageBox">
+                <img src="https://th.bing.com/th?q=Send+Arrow+Icon&w=120&h=120&c=1&rs=1&qlt=90&cb=1&pid=InlineBlock&mkt=en-WW&adlt=moderate&t=1&mw=247"
+                    style="border-radius: 50%; width: 60px; height: 60px; border-color:#ffffff; margin-top: 0.5%; cursor: pointer;"
+                    border="4px" id="SendMessage">
+            </div>
+        </center>
+    </div>
 </body>
 
 </html>
