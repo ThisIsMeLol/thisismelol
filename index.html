@@ -58,10 +58,27 @@
             border-radius: 10px 10px 10px 10px;
             float: right;
             overflow-y: scroll;
+            padding-left: 20px;
+            font-size: 30px;
+            color: white;
         }
 
         .MessageBox {
-            width: 90%;
+            width: 80%;
+            height: 80%;
+            border-radius: 10px 10px 10px 10px;
+            background-color: hsl(0, 1%, 27%);
+            border: none;
+            float: left;
+            margin-left: 1%;
+            margin-top: 0.5%;
+            color: white;
+            font-size: 30px;
+            padding-left: 20px;
+        }
+
+        .Name {
+            width: 10%;
             height: 80%;
             border-radius: 10px 10px 10px 10px;
             background-color: hsl(0, 1%, 27%);
@@ -81,28 +98,20 @@
             border-radius: 10px 10px 10px 10px;
             position: fixed;
         }
-        .Message{
-            height: 65px;
-            width: 40%;
-            background-color: #383838;
-            border-radius: 10px 10px 10px 10px;
-            border: none;
-            margin-left: 1%;
-            color: white;
-            font-size: 30px;
-            padding-left: 20px;
-        }
-        ::-webkit-scrollbar{
+
+        ::-webkit-scrollbar {
             height: 10px;
             width: 10px;
             background-color: #1a1a1a81;
         }
-        ::-webkit-scrollbar-track{
+
+        ::-webkit-scrollbar-track {
             height: 10px;
             width: 10px;
             background-color: #1a1a1a81;
         }
-        ::-webkit-scrollbar-thumb{
+
+        ::-webkit-scrollbar-thumb {
             background-color: #00000081;
             border-radius: 10px 10px 10px 10px;
         }
@@ -121,13 +130,73 @@
         $(document).ready(function () {
             $("#SendMessage").click(function () {
                 var x = $("#MessageBox").val();
-                $("#Results").append("<br><input readonly class='Message' value=''><br>");
+                var y = $("#Name").val();
+                $("#Results").append("<br>", y, ":   ", x, "<br>");
+                $("#MessageBox").val("");
+                $("#Name").val("");
             });
+        });
+        function NoBlankMessage() {
+            var x = document.getElementById("MessageBox");
+            var y = document.getElementById("SendMessage");
+            if (x.value = "") {
+                y.disabled = true;
+            } else {
+                y.disabled = false;
+            }
+        } function setCookie(cname, cvalue, exdays) {
+            var d = new Date();
+            d.setTime(d.getTime() + (exdays * 24 * 60 * 60 * 1000));
+            var expires = "expires=" + d.toGMTString();
+            document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
+        }
+
+        function getCookie(cname) {
+            var name = cname + "=";
+            var decodedCookie = decodeURIComponent(document.cookie);
+            var ca = decodedCookie.split(';');
+            for (var i = 0; i < ca.length; i++) {
+                var c = ca[i];
+                while (c.charAt(0) == ' ') {
+                    c = c.substring(1);
+                }
+                if (c.indexOf(name) == 0) {
+                    return c.substring(name.length, c.length);
+                }
+            }
+            return "";
+        }
+
+        function checkCookie() {
+            var user = getCookie("username");
+            if (user != "") {
+                alert("Welcome again " + user);
+            } else {
+                user = prompt("Please enter your name:", "");
+                if (user != "" && user != null) {
+                    setCookie("username", user, 30);
+                }
+            }
+        }
+        $(document).ready(function(){
+            var user = getCookie("username");
+            $("#Name").val(user)
         });
     </script>
 </head>
 
-<body bgcolor="#1a1a1a">
+<body bgcolor="#1a1a1a" onload="checkCookie()">
+    <div class="Results" id="Results">
+        <center>
+            <div class="MessageUnit">
+                <input readonly class="Name" placeholder="Name" id="Name">
+                <input class="MessageBox" placeholder="Type Your Message Here!" id="MessageBox">
+                <button style="border-radius: 50%; width: 60px; height: 60px; border: none; background-color: #00000000;" ><img src="https://th.bing.com/th?q=Send+Arrow+Icon&w=120&h=120&c=1&rs=1&qlt=90&cb=1&pid=InlineBlock&mkt=en-WW&adlt=moderate&t=1&mw=247"
+                    style="border-radius: 50%; width: 60px; height: 60px; border-color:#ffffff; margin-top: 0.5%; cursor: pointer;"
+                    border="4px" id="SendMessage"></button>
+            </div>
+        </center>
+    </div>
     <div class="Hammer-Div" id="HammerDiv">
         <center>
             <div class="container" id="Menu"><br>
@@ -136,18 +205,8 @@
                 <div class="bar3"></div>
             </div><br><br>
             <img src="https://th.bing.com/th/id/OIP.PTArRyNau0VomdH647ex3gHaHa?w=183&h=183&c=7&o=5&pid=1.7"
-                style="opacity: 0.5; border-radius: 50%; height: 70px; width: 70px;">
+                    style="opacity: 0.5; border-radius: 50%; height: 70px; width: 70px;">
             <p>Chat</p>
-        </center>
-    </div>
-    <div class="Results" id="Results">
-        <center>
-            <div class="MessageUnit">
-                <input class="MessageBox" placeholder="Type Your Message Here!" id="MessageBox">
-                <img src="https://th.bing.com/th?q=Send+Arrow+Icon&w=120&h=120&c=1&rs=1&qlt=90&cb=1&pid=InlineBlock&mkt=en-WW&adlt=moderate&t=1&mw=247"
-                    style="border-radius: 50%; width: 60px; height: 60px; border-color:#ffffff; margin-top: 0.5%; cursor: pointer;"
-                    border="4px" id="SendMessage">
-            </div>
         </center>
     </div>
 </body>
